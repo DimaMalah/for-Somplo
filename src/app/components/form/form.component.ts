@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener } from '@angular/core';
 import {
-  FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   FormBuilder,
+  FormsModule,
   Validators,
+  FormGroup,
 } from '@angular/forms';
 
 @Component({
@@ -16,22 +16,22 @@ import {
   styleUrl: './form.component.scss',
 })
 export class FormComponent {
-  public form: FormGroup;
-  public imageSrc?: string;
-  public imageFile?: File;
-  public imageWidth = 300;
-  public imageHeight = 150;
-  public currentPosition = '0px 0px';
   public currentPositionForGenImage = '0px 0px';
+  public currentPosition = '0px 0px';
+  public imageHeight = 150;
+  public imageWidth = 300;
+  public imageFile?: File;
+  public imageSrc?: string;
+  public form: FormGroup;
 
-  private genScale = 2;
-  private isDragging = false;
-  private startX = 0;
-  private startY = 0;
-  private initialX = 0;
-  private initialY = 0;
   private initialGenImgX = 0;
   private initialGenImgY = 0;
+  private isDragging = false;
+  private initialX = 0;
+  private initialY = 0;
+  private genScale = 2;
+  private startX = 0;
+  private startY = 0;
 
   @HostListener('document:mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
@@ -45,12 +45,12 @@ export class FormComponent {
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      image: [null],
-      animation: ['', Validators.required],
       containerWidthPercent: [100],
       containerHeightPercent: [100],
-      scale: [1],
+      animation: ['', Validators.required],
       quality: [1],
+      scale: [1],
+      image: [null],
     });
   }
 
@@ -82,8 +82,6 @@ export class FormComponent {
     this.startX = event.clientX;
     this.startY = event.clientY;
 
-    console.log(this.currentPosition);
-
     const positionParts = this.currentPosition.split(' ');
     this.initialX = parseInt(positionParts[0], 10);
     this.initialY = parseInt(positionParts[1], 10);
@@ -95,7 +93,7 @@ export class FormComponent {
     event.preventDefault();
   }
 
-  onDragging(event: MouseEvent): void {
+  private onDragging(event: MouseEvent): void {
     if (!this.isDragging) return;
     const deltaX = event.clientX - this.startX;
     const deltaY = event.clientY - this.startY;
@@ -109,8 +107,6 @@ export class FormComponent {
   }
 
   public stopDragging(): void {
-    console.log(this.currentPosition);
-
     this.isDragging = false;
   }
 
