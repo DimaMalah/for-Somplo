@@ -1,0 +1,64 @@
+<div class="container">
+  <form [formGroup]="form" class="form" (ngSubmit)="downloadHTML()">
+    <input type="file" (change)="onFileChange($event)" accept="image/*" />
+    @if(imageSrc) {
+    <div
+      [style.width.px]="form.get('containerWidthPercent')?.value * 3"
+      [style.height.px]="form.get('containerHeightPercent')?.value * 1.5"
+      class="image-container"
+      style="overflow: hidden; position: relative; cursor: grab"
+    >
+      <img
+        id="draggable-image"
+        [src]="imageSrc"
+        [style.object-position]="currentPosition"
+        [style.height.px]="form.get('scale')?.value * imageHeight"
+        (mousedown)="startDragging($event)"
+      />
+    </div>
+    <label for="containerWidthPercent">Container Width (%)</label>
+    <input
+      type="range"
+      formControlName="containerWidthPercent"
+      min="10"
+      max="100"
+      step="1"
+      title="Container Width (%)"
+    />
+    <label for="containerHeightPercent">Container Height (%)</label>
+    <input
+      type="range"
+      formControlName="containerHeightPercent"
+      min="10"
+      max="100"
+      step="1"
+      title="Container Height (%)"
+    />
+    <label for="scale">Scale</label>
+    <input
+      type="range"
+      formControlName="scale"
+      min="1"
+      max="3"
+      step="0.1"
+      title="Scale"
+    />
+    }
+
+    <select formControlName="animation">
+      <option value="" disabled selected hidden>Choose the animation</option>
+      <option value="slideFromTop">Slide from top</option>
+      <option value="zoomFromButton">zoom in from button</option>
+    </select>
+
+    <!-- <input type="text" formControlName="imageSize" placeholder="image Size" /> -->
+    <!--
+    <input
+      type="text"
+      formControlName="containerHeight"
+      placeholder="container Height"
+    /> -->
+
+    <button type="submit" [disabled]="!form.valid">Download File</button>
+  </form>
+</div>
