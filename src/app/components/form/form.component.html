@@ -2,6 +2,7 @@
   <form [formGroup]="form" class="form" (ngSubmit)="downloadHTML()">
     <input type="file" (change)="onFileChange($event)" accept="image/*" />
     @if(imageSrc) {
+    <p>Grab the picture to move it</p>
     <div
       [style.width.px]="form.get('containerWidthPercent')?.value * 3"
       [style.height.px]="form.get('containerHeightPercent')?.value * 1.5"
